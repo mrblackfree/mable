@@ -13,10 +13,17 @@ export default function InstallPrompt() {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
+    // SSR 체크
+    if (typeof window === "undefined") return;
+    
     // 이미 설치된 경우 체크
-    if (window.matchMedia("(display-mode: standalone)").matches) {
-      setIsInstalled(true);
-      return;
+    try {
+      if (window.matchMedia("(display-mode: standalone)").matches) {
+        setIsInstalled(true);
+        return;
+      }
+    } catch {
+      // matchMedia 미지원 환경
     }
 
     // beforeinstallprompt 이벤트 리스너
@@ -92,22 +99,6 @@ export default function InstallPrompt() {
           </button>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-slide-up {
-          animation: slide-up 0.3s ease-out;
-        }
-      `}</style>
     </div>
   );
 }
