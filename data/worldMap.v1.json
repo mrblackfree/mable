@@ -1,0 +1,63 @@
+{
+  "version": "1.1.0",
+  "description": "Phase 1 – 40-tile square board (10 per side)",
+  "tiles": [
+    { "id": "start", "type": "start", "positionIndex": 0, "name": "출발", "highlightColor": "#22d3ee" },
+    { "id": "kr", "type": "country", "positionIndex": 1, "name": "한국", "countryCode": "KR", "price": 150, "toll": 15, "tier": "mid", "fallbackShape": "box", "highlightColor": "#ef4444" },
+    { "id": "jp", "type": "country", "positionIndex": 2, "name": "일본", "countryCode": "JP", "price": 160, "toll": 16, "tier": "mid", "fallbackShape": "cone", "highlightColor": "#ec4899" },
+    { "id": "cn", "type": "country", "positionIndex": 3, "name": "중국", "countryCode": "CN", "price": 140, "toll": 14, "tier": "mid", "fallbackShape": "box", "highlightColor": "#f97316" },
+    { "id": "tw", "type": "country", "positionIndex": 4, "name": "대만", "countryCode": "TW", "price": 100, "toll": 10, "tier": "low", "fallbackShape": "box", "highlightColor": "#dc2626" },
+    { "id": "bonus1", "type": "bonus", "positionIndex": 5, "name": "황금카드", "highlightColor": "#fbbf24" },
+    { "id": "th", "type": "country", "positionIndex": 6, "name": "태국", "countryCode": "TH", "price": 90, "toll": 9, "tier": "low", "fallbackShape": "cone", "highlightColor": "#a855f7" },
+    { "id": "vn", "type": "country", "positionIndex": 7, "name": "베트남", "countryCode": "VN", "price": 80, "toll": 8, "tier": "low", "fallbackShape": "box", "highlightColor": "#ea580c" },
+    { "id": "ph", "type": "country", "positionIndex": 8, "name": "필리핀", "countryCode": "PH", "price": 85, "toll": 8, "tier": "low", "fallbackShape": "cylinder", "highlightColor": "#0284c7" },
+    { "id": "sg", "type": "country", "positionIndex": 9, "name": "싱가포르", "countryCode": "SG", "price": 180, "toll": 18, "tier": "high", "fallbackShape": "box", "highlightColor": "#f43f5e" },
+    
+    { "id": "travel1", "type": "travel", "positionIndex": 10, "name": "세계여행", "highlightColor": "#3b82f6" },
+    { "id": "my", "type": "country", "positionIndex": 11, "name": "말레이시아", "countryCode": "MY", "price": 95, "toll": 9, "tier": "low", "fallbackShape": "cone", "highlightColor": "#0891b2" },
+    { "id": "id", "type": "country", "positionIndex": 12, "name": "인도네시아", "countryCode": "ID", "price": 100, "toll": 10, "tier": "low", "fallbackShape": "box", "highlightColor": "#dc2626" },
+    { "id": "in", "type": "country", "positionIndex": 13, "name": "인도", "countryCode": "IN", "price": 130, "toll": 13, "tier": "mid", "fallbackShape": "cone", "highlightColor": "#f97316" },
+    { "id": "ae", "type": "country", "positionIndex": 14, "name": "UAE", "countryCode": "AE", "price": 220, "toll": 25, "tier": "high", "fallbackShape": "cone", "highlightColor": "#059669" },
+    { "id": "tax1", "type": "tax", "positionIndex": 15, "name": "세금", "highlightColor": "#64748b" },
+    { "id": "sa", "type": "country", "positionIndex": 16, "name": "사우디", "countryCode": "SA", "price": 200, "toll": 22, "tier": "high", "fallbackShape": "box", "highlightColor": "#16a34a" },
+    { "id": "tr", "type": "country", "positionIndex": 17, "name": "튀르키예", "countryCode": "TR", "price": 120, "toll": 12, "tier": "mid", "fallbackShape": "cone", "highlightColor": "#dc2626" },
+    { "id": "eg", "type": "country", "positionIndex": 18, "name": "이집트", "countryCode": "EG", "price": 110, "toll": 11, "tier": "mid", "fallbackShape": "cone", "highlightColor": "#eab308" },
+    { "id": "za", "type": "country", "positionIndex": 19, "name": "남아공", "countryCode": "ZA", "price": 105, "toll": 10, "tier": "mid", "fallbackShape": "box", "highlightColor": "#22c55e" },
+    
+    { "id": "jail", "type": "jail", "positionIndex": 20, "name": "정지", "highlightColor": "#78716c" },
+    { "id": "ng", "type": "country", "positionIndex": 21, "name": "나이지리아", "countryCode": "NG", "price": 75, "toll": 7, "tier": "low", "fallbackShape": "box", "highlightColor": "#15803d" },
+    { "id": "ke", "type": "country", "positionIndex": 22, "name": "케냐", "countryCode": "KE", "price": 70, "toll": 7, "tier": "low", "fallbackShape": "cylinder", "highlightColor": "#b91c1c" },
+    { "id": "ma", "type": "country", "positionIndex": 23, "name": "모로코", "countryCode": "MA", "price": 90, "toll": 9, "tier": "low", "fallbackShape": "box", "highlightColor": "#dc2626" },
+    { "id": "es", "type": "country", "positionIndex": 24, "name": "스페인", "countryCode": "ES", "price": 170, "toll": 17, "tier": "high", "fallbackShape": "box", "highlightColor": "#dc2626" },
+    { "id": "bonus2", "type": "bonus", "positionIndex": 25, "name": "황금카드", "highlightColor": "#fbbf24" },
+    { "id": "pt", "type": "country", "positionIndex": 26, "name": "포르투갈", "countryCode": "PT", "price": 130, "toll": 13, "tier": "mid", "fallbackShape": "box", "highlightColor": "#16a34a" },
+    { "id": "fr", "type": "country", "positionIndex": 27, "name": "프랑스", "countryCode": "FR", "price": 240, "toll": 28, "tier": "high", "fallbackShape": "cone", "highlightColor": "#2563eb" },
+    { "id": "it", "type": "country", "positionIndex": 28, "name": "이탈리아", "countryCode": "IT", "price": 200, "toll": 22, "tier": "high", "fallbackShape": "box", "highlightColor": "#16a34a" },
+    { "id": "de", "type": "country", "positionIndex": 29, "name": "독일", "countryCode": "DE", "price": 210, "toll": 24, "tier": "high", "fallbackShape": "box", "highlightColor": "#facc15" },
+    
+    { "id": "travel2", "type": "travel", "positionIndex": 30, "name": "세계여행", "highlightColor": "#3b82f6" },
+    { "id": "nl", "type": "country", "positionIndex": 31, "name": "네덜란드", "countryCode": "NL", "price": 160, "toll": 16, "tier": "mid", "fallbackShape": "box", "highlightColor": "#f97316" },
+    { "id": "gb", "type": "country", "positionIndex": 32, "name": "영국", "countryCode": "GB", "price": 230, "toll": 26, "tier": "high", "fallbackShape": "box", "highlightColor": "#1d4ed8" },
+    { "id": "ch", "type": "country", "positionIndex": 33, "name": "스위스", "countryCode": "CH", "price": 250, "toll": 30, "tier": "high", "fallbackShape": "cone", "highlightColor": "#dc2626" },
+    { "id": "se", "type": "country", "positionIndex": 34, "name": "스웨덴", "countryCode": "SE", "price": 150, "toll": 15, "tier": "mid", "fallbackShape": "box", "highlightColor": "#0284c7" },
+    { "id": "tax2", "type": "tax", "positionIndex": 35, "name": "세금", "highlightColor": "#64748b" },
+    { "id": "ca", "type": "country", "positionIndex": 36, "name": "캐나다", "countryCode": "CA", "price": 180, "toll": 18, "tier": "high", "fallbackShape": "box", "highlightColor": "#dc2626" },
+    { "id": "us", "type": "country", "positionIndex": 37, "name": "미국", "countryCode": "US", "price": 280, "toll": 35, "tier": "high", "fallbackShape": "cone", "highlightColor": "#2563eb" },
+    { "id": "mx", "type": "country", "positionIndex": 38, "name": "멕시코", "countryCode": "MX", "price": 100, "toll": 10, "tier": "low", "fallbackShape": "box", "highlightColor": "#16a34a" },
+    { "id": "br", "type": "country", "positionIndex": 39, "name": "브라질", "countryCode": "BR", "price": 140, "toll": 14, "tier": "mid", "fallbackShape": "cylinder", "highlightColor": "#16a34a" }
+  ],
+  "settings": {
+    "startingMoney": 1500,
+    "taxAmount": 100,
+    "jailTurns": 1,
+    "passStartBonus": 200,
+    "bonusCards": [
+      { "id": "extra_move", "effect": "move", "value": 3, "description": "추가 이동 3칸" },
+      { "id": "tax_exempt", "effect": "tax_exempt", "description": "다음 세금 면제" },
+      { "id": "free_stay", "effect": "free_stay", "description": "다음 통행료 무료" },
+      { "id": "cash_prize_small", "effect": "cash", "value": 100, "description": "보너스 $100 획득" },
+      { "id": "cash_prize_big", "effect": "cash", "value": 200, "description": "보너스 $200 획득" },
+      { "id": "go_to_start", "effect": "go_to_start", "description": "출발로 이동 + 보너스" }
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 {
-  "name": "mable",
+  "name": "ar-world-marble",
   "version": "0.1.0",
+  "description": "WebAR 3D 보드게임 - 전 세계 국가를 돌아다니는 브루마불",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,15 +10,25 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.4.2",
+    "@react-three/xr": "^6.6.28",
+    "howler": "^2.2.4",
     "next": "16.0.8",
     "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react-dom": "19.2.1",
+    "three": "^0.182.0",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@gltf-transform/core": "^4.2.1",
+    "@gltf-transform/extensions": "^4.2.1",
     "@tailwindcss/postcss": "^4",
+    "@types/howler": "^2.2.12",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.182.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
     "tailwindcss": "^4",

@@ -1,65 +1,70 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+type XRSupport = "unknown" | "supported" | "unsupported";
 
 export default function Home() {
+  const [xrSupport, setXrSupport] = useState<XRSupport>("unknown");
+
+  useEffect(() => {
+    (async () => {
+      if (typeof navigator === "undefined" || !("xr" in navigator)) {
+        setXrSupport("unsupported");
+        return;
+      }
+      try {
+        const supported = await (navigator as Navigator & { xr: XRSystem }).xr.isSessionSupported(
+          "immersive-ar"
+        );
+        setXrSupport(supported ? "supported" : "unsupported");
+      } catch {
+        setXrSupport("unsupported");
+      }
+    })();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-10 p-6 text-center">
+      {/* Logo / Title */}
+      <div className="flex flex-col items-center gap-3">
+        <span className="text-6xl">🌍</span>
+        <h1 className="text-4xl font-bold tracking-tight">
+          AR World Marble
+        </h1>
+        <p className="max-w-md text-zinc-400">
+          전 세계 국가를 돌아다니는 3D WebAR 보드게임
+        </p>
+      </div>
+
+      {/* XR Status */}
+      <div className="glass px-5 py-3 text-sm">
+        {xrSupport === "unknown" && "WebXR 지원 여부 확인 중…"}
+        {xrSupport === "supported" && (
+          <span className="text-cyan-400">✓ AR 모드 사용 가능</span>
+        )}
+        {xrSupport === "unsupported" && (
+          <span className="text-amber-400">
+            ⚠ AR 미지원 – 3D 보드뷰로 플레이합니다
+          </span>
+        )}
+      </div>
+
+      {/* CTAs */}
+      <div className="flex flex-col gap-4 sm:flex-row">
+        <Link href="/game?mode=ar" className="btn btn-primary">
+          🎲 AR 모드로 시작
+        </Link>
+        <Link href="/game?mode=desktop" className="btn btn-secondary">
+          🖥️ 3D 보드뷰로 시작
+        </Link>
+      </div>
+
+      {/* Footer hint */}
+      <p className="absolute bottom-6 text-xs text-zinc-500">
+        Phase 1 MVP · 1~4인 로컬 플레이
+      </p>
     </div>
   );
 }
