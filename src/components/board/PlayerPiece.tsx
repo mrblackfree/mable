@@ -195,9 +195,5 @@ function Sparkles({ color }: { color: string }) {
   );
 }
 
-// 모델 프리로드 (클라이언트에서만 실행)
-if (typeof window !== "undefined") {
-  PLAYER_MODEL_PATHS.forEach(path => {
-    useGLTF.preload(path);
-  });
-}
+// 모델 프리로드는 useEffect 내에서 수행하거나 제거
+// useGLTF.preload는 컴포넌트 외부에서 호출하면 안 됨
