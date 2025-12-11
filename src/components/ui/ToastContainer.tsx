@@ -17,16 +17,12 @@ export default function ToastContainer() {
 
   return (
     <div className="fixed left-1/2 top-20 z-50 flex -translate-x-1/2 flex-col gap-2">
-      {toasts.map((toast, index) => {
+      {toasts.map((toast) => {
         const style = TYPE_STYLES[toast.type];
         return (
           <div
             key={toast.id}
             className={`animate-slide-down flex items-center gap-3 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-sm ${style.bg} ${style.border}`}
-            style={{
-              animation: `slideDown 0.3s ease-out`,
-              animationDelay: `${index * 50}ms`,
-            }}
             onClick={() => removeToast(toast.id)}
           >
             <span className="text-xl">{toast.icon || style.icon}</span>
@@ -34,19 +30,6 @@ export default function ToastContainer() {
           </div>
         );
       })}
-
-      <style jsx>{`
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }
