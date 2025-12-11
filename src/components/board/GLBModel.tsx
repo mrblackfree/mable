@@ -120,11 +120,4 @@ export default function GLBModel({ countryCode, fallback }: GLBModelProps) {
   );
 }
 
-// 모델 프리로드 (선택적)
-export function preloadModel(countryCode: string) {
-  const path = getModelPath(countryCode);
-  if (path) {
-    useGLTF.preload(path);
-  }
-}
-
+// preloadModel 함수 제거됨 - React hooks 규칙 위반 방지
