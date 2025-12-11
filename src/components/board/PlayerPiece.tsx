@@ -195,7 +195,9 @@ function Sparkles({ color }: { color: string }) {
   );
 }
 
-// 모델 프리로드
-PLAYER_MODEL_PATHS.forEach(path => {
-  useGLTF.preload(path);
-});
+// 모델 프리로드 (클라이언트에서만 실행)
+if (typeof window !== "undefined") {
+  PLAYER_MODEL_PATHS.forEach(path => {
+    useGLTF.preload(path);
+  });
+}

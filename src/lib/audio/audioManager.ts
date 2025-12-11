@@ -1,14 +1,19 @@
-import { Howl, Howler } from "howler";
-
 // ============================================
 // Audio Manager – Singleton
 // ============================================
 
 type SfxName = "dice" | "move" | "buy" | "toll" | "bonus" | "travel" | "win";
 
+// SSR 환경 체크
+const isClient = typeof window !== "undefined";
+
+// Howl 타입 (런타임에 할당)
+type HowlType = import("howler").Howl;
+type HowlerType = typeof import("howler").Howler;
+
 class AudioManager {
-  private bgm: Howl | null = null;
-  private sfx: Record<SfxName, Howl | null> = {
+  private bgm: HowlType | null = null;
+  private sfx: Record<SfxName, HowlType | null> = {
     dice: null,
     move: null,
     buy: null,
@@ -21,16 +26,30 @@ class AudioManager {
   private muted = false;
   private bgmVolume = 0.3;
   private sfxVolume = 0.6;
-
-  // iOS/모바일 오디오 unlock
   private unlocked = false;
+  
+  // 동적 로드된 Howler 모듈
+  private HowlClass: (typeof import("howler"))["Howl"] | null = null;
+  private HowlerModule: HowlerType | null = null;
+  private moduleLoaded = false;
 
   constructor() {
-    if (typeof window !== "undefined") {
+    if (isClient) {
+      this.initHowler();
+    }
+  }
+
+  private async initHowler() {
+    try {
+      const howlerModule = await import("howler");
+      this.HowlClass = howlerModule.Howl;
+      this.HowlerModule = howlerModule.Howler;
+      this.moduleLoaded = true;
+
       // 첫 제스처 시 unlock
       const unlock = () => {
-        if (!this.unlocked) {
-          Howler.ctx?.resume();
+        if (!this.unlocked && this.HowlerModule) {
+          this.HowlerModule.ctx?.resume();
           this.unlocked = true;
           window.removeEventListener("click", unlock);
           window.removeEventListener("touchstart", unlock);
@@ -38,6 +57,8 @@ class AudioManager {
       };
       window.addEventListener("click", unlock);
       window.addEventListener("touchstart", unlock);
+    } catch (e) {
+      console.warn("[Audio] Howler 로드 실패:", e);
     }
   }
 
@@ -45,12 +66,14 @@ class AudioManager {
   // BGM
   // ============================================
   loadBGM(src: string) {
+    if (!isClient || !this.HowlClass) return;
+    
     try {
-      this.bgm = new Howl({
+      this.bgm = new this.HowlClass({
         src: [src],
         loop: true,
         volume: this.bgmVolume,
-        html5: true, // 모바일 스트리밍 최적화
+        html5: true,
         onloaderror: () => {
           console.warn(`[Audio] BGM 로드 실패: ${src}`);
           this.bgm = null;
@@ -80,8 +103,10 @@ class AudioManager {
   // SFX
   // ============================================
   loadSFX(name: SfxName, src: string) {
+    if (!isClient || !this.HowlClass) return;
+    
     try {
-      this.sfx[name] = new Howl({
+      this.sfx[name] = new this.HowlClass({
         src: [src],
         volume: this.sfxVolume,
         onloaderror: () => {
@@ -108,7 +133,7 @@ class AudioManager {
   // ============================================
   toggleMute() {
     this.muted = !this.muted;
-    Howler.mute(this.muted);
+    this.HowlerModule?.mute(this.muted);
     return this.muted;
   }
 
@@ -119,7 +144,12 @@ class AudioManager {
   // ============================================
   // Preload All
   // ============================================
-  preloadAll() {
+  async preloadAll() {
+    // 모듈 로드 대기
+    if (!this.moduleLoaded) {
+      await this.initHowler();
+    }
+    
     // BGM (placeholder – 실제 파일이 없으면 로드 실패해도 무시)
     this.loadBGM("/audio/bgm.mp3");
 
@@ -137,4 +167,3 @@ class AudioManager {
 // Singleton export
 export const audioManager = new AudioManager();
 export type { SfxName };
-
