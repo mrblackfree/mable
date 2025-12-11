@@ -1,5 +1,5 @@
 /**
- * 로컬 스토리지 관리
+ * 로컬 스토리지 관리 (안전 처리 포함)
  */
 
 export interface GameRecord {
@@ -17,10 +17,26 @@ const STORAGE_KEY = "ar-world-marble-records";
 const MAX_RECORDS = 10;
 
 /**
+ * localStorage 사용 가능 여부 확인
+ */
+function isStorageAvailable(): boolean {
+  if (typeof window === "undefined") return false;
+  
+  try {
+    const testKey = "__storage_test__";
+    window.localStorage.setItem(testKey, testKey);
+    window.localStorage.removeItem(testKey);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * 저장된 기록 불러오기
  */
 export function loadRecords(): GameRecord[] {
-  if (typeof window === "undefined") return [];
+  if (!isStorageAvailable()) return [];
   
   try {
     const data = localStorage.getItem(STORAGE_KEY);
@@ -35,7 +51,7 @@ export function loadRecords(): GameRecord[] {
  * 기록 저장
  */
 export function saveRecord(record: Omit<GameRecord, "id" | "date">): void {
-  if (typeof window === "undefined") return;
+  if (!isStorageAvailable()) return;
   
   try {
     const records = loadRecords();
@@ -60,8 +76,13 @@ export function saveRecord(record: Omit<GameRecord, "id" | "date">): void {
  * 기록 초기화
  */
 export function clearRecords(): void {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEY);
+  if (!isStorageAvailable()) return;
+  
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // 무시
+  }
 }
 
 /**
@@ -85,12 +106,15 @@ export function formatDuration(seconds: number): string {
  * 날짜 포맷
  */
 export function formatDate(isoString: string): string {
-  const date = new Date(isoString);
-  return date.toLocaleDateString("ko-KR", {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  try {
+    const date = new Date(isoString);
+    return date.toLocaleDateString("ko-KR", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch {
+    return isoString;
+  }
 }
-
