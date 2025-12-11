@@ -2,22 +2,29 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 type XRSupport = "unknown" | "supported" | "unsupported";
 
-export default function Home() {
+function HomePage() {
   const [xrSupport, setXrSupport] = useState<XRSupport>("unknown");
 
   useEffect(() => {
+    // SSR 체크
+    if (typeof window === "undefined") return;
+    
     (async () => {
       if (typeof navigator === "undefined" || !("xr" in navigator)) {
         setXrSupport("unsupported");
         return;
       }
       try {
-        const supported = await (navigator as Navigator & { xr: XRSystem }).xr.isSessionSupported(
-          "immersive-ar"
-        );
+        const xr = (navigator as Navigator & { xr?: XRSystem }).xr;
+        if (!xr) {
+          setXrSupport("unsupported");
+          return;
+        }
+        const supported = await xr.isSessionSupported("immersive-ar");
         setXrSupport(supported ? "supported" : "unsupported");
       } catch {
         setXrSupport("unsupported");
@@ -66,5 +73,13 @@ export default function Home() {
         Phase 1 MVP · 1~4인 로컬 플레이
       </p>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <ErrorBoundary>
+      <HomePage />
+    </ErrorBoundary>
   );
 }

@@ -5,6 +5,7 @@ import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import Tutorial, { shouldShowTutorial } from "@/components/ui/Tutorial";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 // Dynamically import Canvas (SSR-disable) to avoid window/document issues
 const GameCanvas = dynamic(() => import("@/components/scene/GameCanvas"), {
@@ -55,19 +56,21 @@ function GameContent() {
 
 export default function GamePage() {
   return (
-    <main id="game-canvas">
-      <Suspense
-        fallback={
-          <div className="flex h-full w-full items-center justify-center bg-black text-zinc-400">
-            <div className="flex flex-col items-center gap-4">
-              <span className="text-4xl animate-bounce">🌍</span>
-              <span>Loading...</span>
+    <ErrorBoundary>
+      <main id="game-canvas">
+        <Suspense
+          fallback={
+            <div className="flex h-full w-full items-center justify-center bg-black text-zinc-400">
+              <div className="flex flex-col items-center gap-4">
+                <span className="text-4xl animate-bounce">🌍</span>
+                <span>Loading...</span>
+              </div>
             </div>
-          </div>
-        }
-      >
-        <GameContent />
-      </Suspense>
-    </main>
+          }
+        >
+          <GameContent />
+        </Suspense>
+      </main>
+    </ErrorBoundary>
   );
 }
