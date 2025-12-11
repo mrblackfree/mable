@@ -1,6 +1,6 @@
 {
   "name": "ar-world-marble",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "WebAR 3D 보드게임 - 전 세계 국가를 돌아다니는 브루마불",
   "private": true,
   "scripts": {

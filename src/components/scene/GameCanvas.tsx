@@ -22,7 +22,6 @@ import PropertyPanel from "@/components/ui/PropertyPanel";
 import InstallPrompt from "@/components/ui/InstallPrompt";
 import ParticleEffects, { VictoryFireworks } from "@/components/effects/ParticleEffects";
 import { useGameStore } from "@/stores/gameStore";
-import { useGameAudio } from "@/lib/audio/useAudio";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboard";
 import type { Group } from "three";
 
@@ -139,9 +138,6 @@ export default function GameCanvas({ mode }: Props) {
   const boardPlaced = useGameStore((s) => s.boardPlaced);
   const placeBoard = useGameStore((s) => s.placeBoard);
 
-  // 게임 오디오 훅
-  useGameAudio();
-  
   // 키보드 단축키
   useKeyboardShortcuts();
 

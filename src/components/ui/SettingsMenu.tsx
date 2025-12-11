@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useAudioControls } from "@/lib/audio/useAudio";
+import { useState } from "react";
 import { KEYBOARD_SHORTCUTS } from "@/hooks/useKeyboard";
 
 interface SettingsMenuProps {
@@ -10,27 +9,11 @@ interface SettingsMenuProps {
 }
 
 export default function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
-  const { toggleMute, isMuted, setBGMVolume, setSFXVolume } = useAudioControls();
   const [muted, setMuted] = useState(false);
   const [bgmVol, setBgmVol] = useState(30);
   const [sfxVol, setSfxVol] = useState(60);
 
-  useEffect(() => {
-    setMuted(isMuted());
-  }, [isMuted]);
-
-  const handleBGMChange = (value: number) => {
-    setBgmVol(value);
-    setBGMVolume(value / 100);
-  };
-
-  const handleSFXChange = (value: number) => {
-    setSfxVol(value);
-    setSFXVolume(value / 100);
-  };
-
   const handleMuteToggle = () => {
-    toggleMute();
     setMuted(!muted);
   };
 
@@ -49,15 +32,17 @@ export default function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
 
         <h2 className="mb-6 text-center text-2xl font-bold text-white">⚙️ 설정</h2>
 
-        {/* 오디오 설정 */}
+        {/* 오디오 설정 (현재 비활성화) */}
         <div className="mb-6 space-y-4">
           <h3 className="text-lg font-medium text-zinc-300">🔊 오디오</h3>
+          <p className="text-sm text-zinc-500">오디오 기능은 현재 준비 중입니다.</p>
 
           {/* 음소거 토글 */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between opacity-50">
             <span className="text-zinc-400">음소거</span>
             <button
               onClick={handleMuteToggle}
+              disabled
               className={`h-8 w-14 rounded-full transition-colors ${
                 muted ? "bg-zinc-600" : "bg-cyan-500"
               }`}
@@ -71,7 +56,7 @@ export default function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
           </div>
 
           {/* BGM 볼륨 */}
-          <div className="space-y-2">
+          <div className="space-y-2 opacity-50">
             <div className="flex items-center justify-between">
               <span className="text-zinc-400">🎵 BGM</span>
               <span className="text-sm text-zinc-500">{bgmVol}%</span>
@@ -81,14 +66,14 @@ export default function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
               min="0"
               max="100"
               value={bgmVol}
-              onChange={(e) => handleBGMChange(Number(e.target.value))}
+              onChange={(e) => setBgmVol(Number(e.target.value))}
               className="w-full accent-cyan-500"
-              disabled={muted}
+              disabled
             />
           </div>
 
           {/* SFX 볼륨 */}
-          <div className="space-y-2">
+          <div className="space-y-2 opacity-50">
             <div className="flex items-center justify-between">
               <span className="text-zinc-400">🔔 효과음</span>
               <span className="text-sm text-zinc-500">{sfxVol}%</span>
@@ -98,9 +83,9 @@ export default function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
               min="0"
               max="100"
               value={sfxVol}
-              onChange={(e) => handleSFXChange(Number(e.target.value))}
+              onChange={(e) => setSfxVol(Number(e.target.value))}
               className="w-full accent-purple-500"
-              disabled={muted}
+              disabled
             />
           </div>
         </div>
@@ -125,7 +110,7 @@ export default function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
 
         {/* 게임 정보 */}
         <div className="mt-6 border-t border-zinc-700 pt-4 text-center">
-          <p className="text-sm text-zinc-500">AR World Marble v1.0</p>
+          <p className="text-sm text-zinc-500">AR World Marble v0.3.0</p>
           <p className="text-xs text-zinc-600">© 2024 World Marble Team</p>
         </div>
       </div>
@@ -153,4 +138,3 @@ export function SettingsButton() {
     </>
   );
 }
-

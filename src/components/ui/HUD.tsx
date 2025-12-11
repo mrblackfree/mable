@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useGameStore } from "@/stores/gameStore";
-import { useAudioControls } from "@/lib/audio/useAudio";
 import type { BotDifficulty } from "@/lib/game/botAI";
 import { saveRecord, loadRecords, formatDuration, formatDate, type GameRecord } from "@/lib/storage/localStorage";
 
@@ -19,7 +18,6 @@ export default function HUD() {
   const initGame = useGameStore((s) => s.initGame);
   const winner = useGameStore((s) => s.winner);
 
-  const { toggleMute, isMuted } = useAudioControls();
   const [muted, setMuted] = useState(false);
   
   // 로비 설정
@@ -28,8 +26,7 @@ export default function HUD() {
   const [difficulty, setDifficulty] = useState<BotDifficulty>("normal");
 
   const handleMuteToggle = () => {
-    toggleMute();
-    setMuted(isMuted());
+    setMuted(!muted);
   };
   
   const handleStartGame = () => {
